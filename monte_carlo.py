@@ -1,4 +1,4 @@
-# Global variables
+#asdkljfs Global variables
 number_of_inputs = 4
 user_input = [0] * number_of_inputs
 user_input_text = ['starting value', 'multiplier', 'increment', 'modulus']
