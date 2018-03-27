@@ -36,14 +36,16 @@ def generate(how_many):
         pseudo_random_values_u[j] = pseudo_random_values_x[j] / modulus
     return pseudo_random_values_u
 
+
 def generate_xi(how_many):
-    xi_vals = []
-    ui_vals = generate(how_many)
+    xi_values = [0] * how_many
+    ui_values = generate(how_many)
     for k in range(how_many):
-        xi_vals[k] = 12*math.log(1-(ui_vals[k]))
-    return xi_vals
+        xi_values[k] = 12*math.log(1-(ui_values[k]))
+    return xi_values
 
 
 #   1000, 7893, 3517, 2^13
+
 print(generate(4))
 print(generate_xi(4))
