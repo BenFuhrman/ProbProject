@@ -41,7 +41,7 @@ def generate_xi(how_many):
     xi_values = [0] * how_many
     ui_values = generate(how_many)
     for k in range(how_many):
-        xi_values[k] = 12*math.log(1-(ui_values[k]))
+        xi_values[k] = -12*math.log(1-(ui_values[k]))
     return xi_values
 
 
