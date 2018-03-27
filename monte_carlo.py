@@ -1,4 +1,5 @@
-#asdkljfs Global variables
+# Global variables
+import math
 number_of_inputs = 4
 user_input = [0] * number_of_inputs
 user_input_text = ['starting value', 'multiplier', 'increment', 'modulus']
@@ -35,6 +36,14 @@ def generate(how_many):
         pseudo_random_values_u[j] = pseudo_random_values_x[j] / modulus
     return pseudo_random_values_u
 
+def generate_xi(how_many):
+    xi_vals = []
+    ui_vals = generate(how_many)
+    for k in range(how_many):
+        xi_vals[k] = 12*math.log(1-(ui_vals[k]))
+    return xi_vals
+
 
 #   1000, 7893, 3517, 2^13
 print(generate(4))
+print(generate_xi(4))
