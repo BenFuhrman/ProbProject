@@ -1,5 +1,9 @@
 # Global variables
 import math
+
+w_list = [0] * 500
+
+
 number_of_inputs = 4
 user_input = [0] * number_of_inputs
 user_input_text = ['starting value', 'multiplier', 'increment', 'modulus']
@@ -46,7 +50,28 @@ def generate_xi(how_many):
 
 
 #   1000, 7893, 3517, 2^13
+def mc_sim(num_runs):
+    ulist = generate(num_runs)
+    xlist = generate_xi(num_runs)
+    for i in range(num_runs):
+        failure = 0
+        while failure < 4:
+            w_list[i] += 6
+            if ulist[i] <= 0.2:
+                failure += 1
+                w_list[i] += 4
+            elif ulist[i] <= 0.5:
+                failure += 1
+                w_list[i] += 26
+            else:
+                w_list[i] += xlist[i]
+                break
+    #print(ulist)
+    #print(xlist)
+    print(w_list)
 
-print(generate(4))
-print(generate_xi(4))
+
+mc_sim(500)
+
+
 
