@@ -1,5 +1,6 @@
 # Global variables
 import math
+import statistics
 
 w_list = [0] * 500
 
@@ -51,28 +52,30 @@ def generate_xi(how_many):
 
 #   1000, 7893, 3517, 2^13
 def mc_sim(num_runs):
-    ulist = generate(num_runs)
+    ulist = generate(num_runs*2)
     xlist = generate_xi(num_runs)
     for i in range(num_runs):
         failure = 0
         while failure < 4:
             w_list[i] += 6
-            if ulist[i] <= 0.2:
+            if ulist[i+num_runs] <= 0.2:
                 failure += 1
-                w_list[i] += 4
-            elif ulist[i] <= 0.5:
+                w_list[i] += 3
+                w_list[i] += 1
+            elif ulist[i+num_runs] <= 0.5:
                 failure += 1
-                w_list[i] += 26
+                w_list[i] += 25
+                w_list[i] += 1
             else:
                 w_list[i] += xlist[i]
                 break
-    #print(ulist)
-    print(str(sum(xlist)/500))
+    print(len(ulist))
     print(w_list)
+    print("Average X R.V = " + str(sum(xlist) / 500))
+
 
 def prob(val, length, lg):
     count = 0
-    ret_val = 0
     if lg == '>=':
         for element in w_list:
             if element >= val:
@@ -89,17 +92,28 @@ def prob(val, length, lg):
         for element in w_list:
             if element < val:
                 count += 1
-    ret_val = count / length
-    return ret_val
+    return count / length
 
-length = len(w_list)
+
+length_of_list = len(w_list)
 mc_sim(500)
-mean = sum(w_list) / len(w_list)
-print("Mean = " + str(mean))
-print("P(W<=15)= " + str(prob(15, length, '<=')))
-print("P(W<=20)= " + str(prob(20, length, '<=')))
-print("P(W<=30)= " + str(prob(30, length, '<=')))
-print("P(W>40)= " + str(prob(40, length, '>')))
+
+w_list_first = [0] * 125
+w_list_third = [0] * 125
+for w in range(length_of_list):
+    if w < 125:
+        w_list_first[w] = w_list[w]
+    elif 250 <= w < 375:
+        w_list_third[w-250] = w_list[w]
+
+print("Mean = " + str(sum(w_list) / len(w_list)))
+print("Median = " + str(statistics.median(w_list)))
+print("First Quartile = " + str(statistics.median(w_list_first)))
+print("Third Quartile = " + str(statistics.median(w_list_third)))
+print("P(W<=15) = " + str(prob(15, length_of_list, '<=')))
+print("P(W<=20) = " + str(prob(20, length_of_list, '<=')))
+print("P(W<=30) = " + str(prob(30, length_of_list, '<=')))
+print("P(W>40) = " + str(prob(40, length_of_list, '>')))
 
 
 
