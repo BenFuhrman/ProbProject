@@ -67,11 +67,41 @@ def mc_sim(num_runs):
                 w_list[i] += xlist[i]
                 break
     #print(ulist)
-    #print(xlist)
+    print(str(sum(xlist)/500))
     print(w_list)
 
+def prob(val, length, lg):
+    count = 0
+    ret_val = 0
+    if lg == '>=':
+        for element in w_list:
+            if element >= val:
+                count += 1
+    elif lg == '>':
+        for element in w_list:
+            if element > val:
+                count += 1
+    elif lg == '<=':
+        for element in w_list:
+            if element <= val:
+                count += 1
+    elif lg == '<':
+        for element in w_list:
+            if element < val:
+                count += 1
+    ret_val = count / length
+    return ret_val
 
+length = len(w_list)
 mc_sim(500)
+mean = sum(w_list) / len(w_list)
+print("Mean = " + str(mean))
+print("P(W<=15)= " + str(prob(15, length, '<=')))
+print("P(W<=20)= " + str(prob(20, length, '<=')))
+print("P(W<=30)= " + str(prob(30, length, '<=')))
+print("P(W>40)= " + str(prob(40, length, '>')))
+
+
 
 
 
