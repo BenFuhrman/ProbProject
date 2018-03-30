@@ -52,23 +52,28 @@ def generate_xi(how_many):
 
 #   1000, 7893, 3517, 2^13
 def mc_sim(num_runs):
-    ulist = generate(num_runs*2)
+    ulist = generate(num_runs*5)
     xlist = generate_xi(num_runs)
     for i in range(num_runs):
-        failure = 0
-        while failure < 4:
+        failure = 1
+        while failure < 5:
             w_list[i] += 6
-            if ulist[i+num_runs] <= 0.2:
+            if ulist[i+(num_runs*failure)] <= 0.2:
                 failure += 1
                 w_list[i] += 3
                 w_list[i] += 1
-            elif ulist[i+num_runs] <= 0.5:
+            elif ulist[i+(num_runs*failure)] <= 0.5:
                 failure += 1
                 w_list[i] += 25
                 w_list[i] += 1
             else:
-                w_list[i] += xlist[i]
-                break
+                if xlist[i] > 25:
+                    failure += 1
+                    w_list[i] += 25
+                    w_list[i] += 1
+                else:
+                    w_list[i] += xlist[i]
+                    break
     print(len(ulist))
     print(w_list)
     print("Average X R.V = " + str(sum(xlist) / 500))
@@ -114,6 +119,11 @@ print("P(W<=15) = " + str(prob(15, length_of_list, '<=')))
 print("P(W<=20) = " + str(prob(20, length_of_list, '<=')))
 print("P(W<=30) = " + str(prob(30, length_of_list, '<=')))
 print("P(W>40) = " + str(prob(40, length_of_list, '>')))
+print("P(W>65) = " + str(prob(65, length_of_list, '>')))
+print("P(W>80) = " + str(prob(80, length_of_list, '>')))
+print("P(W>120) = " + str(prob(120, length_of_list, '>')))
+w_list.sort()
+print(str(w_list))
 
 
 
